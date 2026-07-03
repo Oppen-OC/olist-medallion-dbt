@@ -4,8 +4,8 @@ This module covers design principles and patterns for building systems around da
 
 ## Exercises
 
-*   [**Exercise 1: Multi-Tier Lakehouse Data Pipeline**](./exercise-1-lakehouse-pipeline.md)
-    *   Design and build a structured data pipeline (Bronze/Silver/Gold) on a public dataset using tools like DuckDB+dbt or BigQuery+Dataform.
+*   [**Exercise 1: Medallion Architecture Data Pipeline**](./exercise-1-medallion-pipeline.md)
+    *   Design and build a Medallion Architecture data pipeline (Bronze/Silver/Gold) on a public dataset using tools like DuckDB+dbt, BigQuery+Dataform, or reusing your Module 2 pipeline stack.
 
 ---
 [⬅ Back to Home](../README.md)

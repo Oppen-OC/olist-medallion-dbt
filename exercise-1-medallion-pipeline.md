@@ -1,7 +1,7 @@
-# Exercise 1: Multi-Tier Lakehouse Data Pipeline
+# Exercise 1: Medallion Architecture Data Pipeline
 
 ## 🏆 Project Objective
-Build and deploy a multi-tier lakehouse data storage pipeline using open table formats and structured layers (Bronze, Silver, Gold).
+Build and deploy a Medallion Architecture data pipeline using open table formats and structured layers (Bronze, Silver, Gold).
 
 *   **Dataset Selection**: Select any public dataset from Kaggle, UCI, or any other open data source (e.g., e-commerce transactions, sensor logs, weather data).
 *   **Bronze Layer**: Ingest the raw data files with minimal modification. Keep the original schema and format.
@@ -19,6 +19,10 @@ Build and deploy a multi-tier lakehouse data storage pipeline using open table f
 ### Option 2 (Cloud-Native)
 *   **Stack**: Google Cloud BigQuery Sandbox + Dataform (or similar AWS/Azure equivalents)
 *   **Details**: Create and orchestrate SQL-based transformations, schema assertions, and tables natively in the cloud.
+
+### Option 3 (Pipeline Reuse)
+*   **Stack**: Custom End-to-End Pipeline stack from Module 2, Exercise 2 (e.g., Debezium, Kafka, Spark/Flink, and a database/lakehouse)
+*   **Details**: Reuse your own dockerized or cloud-native ingestion/processing architecture to implement the three distinct structural layers.
 
 ---
 
