@@ -35,5 +35,12 @@ Build and deploy a Medallion Architecture data pipeline using open table formats
 3.  **Deliverable 3: Final Validation Queries**
     *   SQL query outputs from your Gold layer illustrating the final business value derived (e.g., monthly sales performance, average sensor readings, user engagement trends).
 
+## 📚 References & Further Reading
+*   [DuckDB Documentation](https://duckdb.org/docs/) - Embedded analytical SQL database.
+*   [dbt (Data Build Tool) Documentation](https://docs.getdbt.com/) - Tool for developing and testing SQL-based data transformations.
+*   [Google Cloud BigQuery Documentation](https://cloud.google.com/bigquery/docs) - Serverless multi-cloud data warehouse.
+*   [Google Cloud Dataform Documentation](https://cloud.google.com/dataform/docs) - Tool to develop, test, and run SQL workflows in BigQuery.
+*   [What is the Medallion Architecture?](https://www.databricks.com/glossary/medallion-architecture) - Definition and design patterns for Bronze, Silver, and Gold data layers.
+
 ---
 [⬅ Back to Module 3 README](./README.md)
