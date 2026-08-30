@@ -1,0 +1,85 @@
+version: 2
+
+models:
+  - name: stg_orders
+    description: "Bronze: raw order records, one row per order, straight from olist_orders_dataset.csv"
+    columns:
+      - name: order_id
+        description: "Primary key of the order"
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "FK to stg_customers.customer_id"
+        tests:
+          - not_null
+
+  - name: stg_customers
+    description: "Bronze: raw customer records, one row per customer_id/order pairing"
+    columns:
+      - name: customer_id
+        description: "Primary key of the customer record, unique per order"
+        tests:
+          - unique
+          - not_null
+      - name: customer_unique_id
+        description: "Stable id for a real-world customer across multiple orders"
+
+  - name: stg_order_items
+    description: "Bronze: raw line items per order, one row per product within an order"
+    columns:
+      - name: order_id
+        description: "FK to stg_orders.order_id"
+        tests:
+          - not_null
+      - name: product_id
+        description: "FK to stg_products.product_id"
+        tests:
+          - not_null
+
+  - name: stg_order_payments
+    description: "Bronze: raw payment transactions per order"
+    columns:
+      - name: order_id
+        description: "FK to stg_orders.order_id"
+        tests:
+          - not_null
+
+  - name: stg_order_reviews
+    description: "Bronze: raw customer reviews per order"
+    columns:
+      - name: review_id
+        description: "Primary key of the review"
+        tests:
+          - not_null
+      - name: order_id
+        description: "FK to stg_orders.order_id"
+        tests:
+          - not_null
+
+  - name: stg_products
+    description: "Bronze: raw product catalog"
+    columns:
+      - name: product_id
+        description: "Primary key of the product"
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_sellers
+    description: "Bronze: raw seller registry"
+    columns:
+      - name: seller_id
+        description: "Primary key of the seller"
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_geolocation
+    description: "Bronze: raw zip-code-to-lat/lng lookup, many rows per zip code prefix"
+
+  - name: stg_product_category_translation
+    description: "Bronze: raw lookup translating Portuguese product category names to English"
+    columns:
+      - name: product_category_name
+        description: "Portuguese category name, FK to stg_products.product_category_name"

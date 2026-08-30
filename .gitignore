@@ -1,0 +1,5 @@
+.venv/
+brazilian-ecommerce.zip
+data/raw/
+logs/
+olist_medallion/*.duckdb

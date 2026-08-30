@@ -1,0 +1,72 @@
+version: 2
+
+models:
+  - name: silver_orders
+    description: "Silver: deduped orders, one row per order_id, nulls on required fields dropped"
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        tests:
+          - not_null
+      - name: order_status
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['created', 'approved', 'processing', 'invoiced', 'shipped', 'delivered', 'unavailable', 'canceled']
+
+  - name: silver_customers
+    description: "Silver: deduped customers, cleaned city/state"
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
+
+  - name: silver_sellers
+    description: "Silver: deduped sellers, cleaned city/state"
+    columns:
+      - name: seller_id
+        tests:
+          - unique
+          - not_null
+
+  - name: silver_products
+    description: "Silver: deduped products enriched with English category name (fallback 'unknown')"
+    columns:
+      - name: product_id
+        tests:
+          - unique
+          - not_null
+
+  - name: silver_order_items
+    description: "Silver: deduped order line items, negative prices dropped"
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+      - name: product_id
+        tests:
+          - not_null
+
+  - name: silver_order_payments
+    description: "Silver: deduped payment transactions, negative values dropped"
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+
+  - name: silver_order_reviews
+    description: "Silver: deduped reviews, score restricted to 1-5"
+    columns:
+      - name: review_id
+        tests:
+          - unique
+          - not_null
+      - name: review_score
+        tests:
+          - accepted_values:
+              arguments:
+                values: [1, 2, 3, 4, 5]
