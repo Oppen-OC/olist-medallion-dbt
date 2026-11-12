@@ -1,4 +1,4 @@
--- Tolerance of 1.0: gold rounds each group to 2 decimals, so per-group rounding error accumulates in the total.
+-- An empty gold table (NULL sum) also fails the test. Tolerance of 1.0: gold rounds each group to 2 decimals, so per-group rounding error accumulates in the total.
 with silver_total as (
     select sum(i.price) as total
     from {{ ref('silver_order_items') }} i
@@ -18,4 +18,4 @@ gold_totals as (
 select g.gold_table, g.total as gold_total, s.total as silver_total
 from gold_totals g
 cross join silver_total s
-where abs(g.total - s.total) > 1.0
+where g.total is null or s.total is null or abs(g.total - s.total) > 1.0
