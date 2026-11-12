@@ -42,5 +42,3 @@ Build and deploy a Medallion Architecture data pipeline using open table formats
 *   [Google Cloud Dataform Documentation](https://cloud.google.com/dataform/docs) - Tool to develop, test, and run SQL workflows in BigQuery.
 *   [What is the Medallion Architecture?](https://www.databricks.com/glossary/medallion-architecture) - Definition and design patterns for Bronze, Silver, and Gold data layers.
 
----
-[⬅ Back to Module 3 README](./README.md)

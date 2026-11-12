@@ -1,5 +1,9 @@
 .venv/
-brazilian-ecommerce.zip
 data/raw/
+brazilian-ecommerce.zip
 logs/
-olist_medallion/*.duckdb
+target/
+dbt_packages/
+*.duckdb
+*.duckdb.wal
+.env

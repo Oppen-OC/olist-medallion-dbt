@@ -32,3 +32,6 @@ models:
       +materialized: table
     gold:
       +materialized: table
+
+vars:
+  raw_path: 'data/raw'
