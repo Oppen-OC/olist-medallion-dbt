@@ -11,6 +11,10 @@ models:
       - name: customer_id
         data_tests:
           - not_null
+          - relationships:
+              arguments:
+                to: ref('silver_customers')
+                field: customer_id
       - name: order_status
         data_tests:
           - accepted_values:
@@ -47,9 +51,23 @@ models:
       - name: order_id
         data_tests:
           - not_null
+          - relationships:
+              arguments:
+                to: ref('silver_orders')
+                field: order_id
       - name: product_id
         data_tests:
           - not_null
+          - relationships:
+              arguments:
+                to: ref('silver_products')
+                field: product_id
+      - name: seller_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('silver_sellers')
+                field: seller_id
 
   - name: silver_order_payments
     description: "Silver: deduped payment transactions, negative values dropped"
@@ -57,6 +75,10 @@ models:
       - name: order_id
         data_tests:
           - not_null
+          - relationships:
+              arguments:
+                to: ref('silver_orders')
+                field: order_id
 
   - name: silver_order_reviews
     description: "Silver: deduped reviews, score restricted to 1-5"
@@ -65,6 +87,12 @@ models:
         data_tests:
           - unique
           - not_null
+      - name: order_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('silver_orders')
+                field: order_id
       - name: review_score
         data_tests:
           - accepted_values:
