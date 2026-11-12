@@ -8,6 +8,10 @@ models:
         data_tests:
           - unique
           - not_null
+      - name: total_revenue
+        description: "Merchandise revenue: sum of item price over non-canceled orders, freight excluded."
+      - name: avg_order_value
+        description: "Average merchandise revenue per order in the month: mean of per-order sum(price), freight excluded, non-canceled orders only."
 
   - name: gold_category_performance
     description: "Gold: revenue and item volume aggregated by product category (English name)"
@@ -16,6 +20,8 @@ models:
         data_tests:
           - unique
           - not_null
+      - name: total_revenue
+        description: "Merchandise revenue: sum of item price over non-canceled orders, freight excluded."
 
   - name: gold_seller_performance
     description: "Gold: revenue, order volume and average review score aggregated by seller"
@@ -24,3 +30,7 @@ models:
         data_tests:
           - unique
           - not_null
+      - name: total_revenue
+        description: "Merchandise revenue: sum of item price over non-canceled orders, freight excluded."
+      - name: avg_review_score
+        description: "Average customer review score (1-5) over non-canceled orders. Review scores are first averaged per (seller, order), so each order counts once regardless of how many items the seller shipped in it, then averaged per seller."

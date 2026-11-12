@@ -8,7 +8,7 @@ order_revenue as (
     select
         o.order_id,
         date_trunc('month', o.order_purchase_timestamp) as order_month,
-        sum(i.price + i.freight_value) as order_revenue
+        sum(i.price) as order_revenue
     from valid_orders o
     join {{ ref('silver_order_items') }} i
         on o.order_id = i.order_id
