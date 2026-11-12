@@ -22,6 +22,8 @@ Raw CSV loaded as-is via `read_csv_auto`, no transformation. One table per sourc
 
 Deduplicated, null-filtered, typed, enriched. Full descriptions and tests in [`models/silver/_silver__models.yml`](models/silver/_silver__models.yml).
 
+Every **FK** column below is covered by a dbt `relationships` test against its parent table. Composite keys (`(order_id, order_item_id)` and `(order_id, payment_sequential)`) are checked by singular tests in [`tests/`](tests/).
+
 | Table | Columns (type) | Cleaning applied |
 |---|---|---|
 | `silver_orders` | `order_id` VARCHAR **PK**, `customer_id` VARCHAR, `order_status` VARCHAR, 4x TIMESTAMP | Dedup by `order_id` (latest `order_purchase_timestamp` wins). Drops rows with null `order_id`/`customer_id`/`order_purchase_timestamp`. |
@@ -36,6 +38,8 @@ Deduplicated, null-filtered, typed, enriched. Full descriptions and tests in [`m
 
 Business aggregates, joined from silver. Full descriptions and tests in [`models/gold/_gold__models.yml`](models/gold/_gold__models.yml).
 
+Gold schemas are enforced dbt contracts (`contract.enforced: true`): the column names and types below are checked at build time, and a mismatch fails the build. A singular test also reconciles each gold table's `sum(total_revenue)` to the silver `sum(price)` of non-canceled orders.
+
 | Table | Columns (type) | Business question answered |
 |---|---|---|
 | `gold_monthly_sales` | `order_month` TIMESTAMP **PK**, `total_orders` BIGINT, `total_revenue` DOUBLE, `avg_order_value` DOUBLE | Monthly sales trend: how much revenue and how many orders per calendar month? |
@@ -48,7 +52,7 @@ Metric definitions:
 
 - `total_revenue` (all three tables) is merchandise revenue: `sum(price)` over non-canceled order items, freight excluded.
 - `avg_order_value` is the mean of per-order `sum(price)` in the month, so freight is also excluded.
-- `avg_review_score` averages review scores over non-canceled orders only. Scores are first averaged per `(seller_id, order_id)` and then per seller, so each order counts once however many items it holds.
+- `avg_review_score` averages review scores over non-canceled orders only. Scores are first averaged per `(seller_id, order_id)` and then per seller, so each order counts once however many items it holds. It is NULL when the seller has no reviewed non-canceled orders (6 sellers).
 
 ## Lineage
 
