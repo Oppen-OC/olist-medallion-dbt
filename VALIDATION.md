@@ -34,7 +34,7 @@ Query: [`analyses/monthly_sales_trend.sql`](analyses/monthly_sales_trend.sql)
 | 2018-08-01 | 6421 | 848860.10 | 132.20 |
 | 2018-09-01 | 1 | 145.00 | 145.00 |
 
-**Read:** business ramps up from late 2016, peaks Nov 2017 (Black Friday, 7421 orders / $1.00M), then plateaus at roughly $0.84M-$0.99M/month through Aug 2018. First/last months are partial (dataset edges).
+**Read:** business ramps up from late 2016, peaks Nov 2017 (Black Friday, 7421 orders / $1.00M), dips to $0.74M in Dec 2017, then holds at $0.84M-$0.99M/month from Jan to Aug 2018. First/last months are partial (dataset edges).
 
 ## 2. Top product categories by revenue
 
@@ -54,7 +54,7 @@ Query: [`analyses/top_categories.sql`](analyses/top_categories.sql)
 | auto | 3873 | 4205 | 586620.73 | 139.51 |
 | garden_tools | 3505 | 4328 | 481009.94 | 111.14 |
 
-**Read:** `health_beauty` leads on total revenue despite a lower average ticket than `watches_gifts` ($200.70 avg) — volume beats margin here.
+**Read:** `health_beauty` leads on total revenue despite a lower average item price than `watches_gifts` ($200.70 avg) — volume beats price point here.
 
 ## 3. Top sellers by revenue
 
@@ -74,7 +74,7 @@ Query: [`analyses/top_sellers.sql`](analyses/top_sellers.sql)
 | 1025f0e2d44d7041d6cf58b6550e0bfa | sao paulo | SP | 915 | 138968.55 | 4.00 |
 | 955fee9216a65b617aa5c0531780ce60 | sao paulo | SP | 1286 | 135159.70 | 4.16 |
 
-**Read:** 9 of the top 10 revenue sellers are in SP state (logistics hub effect). Revenue rank and volume rank diverge: the highest-volume seller (`4a3ca9315b...`, 1804 orders) ranks only third on revenue, and the two weakest review scores in the top 10 belong to `7c67e1448b...` (3.49) and `4a3ca9315b...` (3.83), the highest-volume seller, worth flagging for a quality review. Review scores cover non-canceled orders only, with each order counted once per seller.
+**Read:** 9 of the top 10 revenue sellers are in SP state, against a base rate of 59.7% of all sellers (`silver_sellers`) and 64.4% of total seller revenue (`gold_seller_performance`), so SP is over-represented but not overwhelmingly. Revenue rank and volume rank diverge: the highest-volume seller in the top 10 (`4a3ca9315b...`, 1804 orders) ranks only third on revenue, and the two weakest review scores in the top 10 belong to `7c67e1448b...` (3.49) and `4a3ca9315b...` (3.83), the highest-volume seller in the top 10, worth flagging for a quality review. Review scores cover non-canceled orders only, with each order counted once per seller.
 
 ## How to reproduce
 

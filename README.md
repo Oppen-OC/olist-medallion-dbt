@@ -13,9 +13,9 @@ A bronze/silver/gold lakehouse-style pipeline on ~100k real Brazilian e-commerce
 
 Computed from the gold layer; queries and full tables are in [VALIDATION.md](VALIDATION.md). Revenue is item price, freight excluded.
 
-- **Trend:** revenue peaked in Nov 2017 (Black Friday) at 7,421 orders and $1.00M, then plateaued at roughly $0.84M-$0.99M per month through Aug 2018.
-- **Top category:** `health_beauty` leads with $1.26M in revenue, despite a lower average ticket ($130.34) than `watches_gifts` ($200.70). Volume beats margin.
-- **Sellers:** 9 of the top 10 sellers by revenue are in SP state. The highest-volume seller (1,804 orders) ranks only third on revenue and has one of the two weakest review scores in the top 10 (3.83).
+- **Trend:** revenue peaked in Nov 2017 (Black Friday) at 7,421 orders and $1.00M, dipped to $0.74M in Dec 2017, then held at $0.84M-$0.99M per month from Jan to Aug 2018.
+- **Top category:** `health_beauty` leads with $1.26M in revenue, despite a lower average item price ($130.34) than `watches_gifts` ($200.70). Volume beats price point.
+- **Sellers:** 9 of the top 10 sellers by revenue are in SP state, against a base rate of 59.7% of all sellers and 64.4% of total seller revenue. The highest-volume seller in the top 10 (1,804 orders) ranks only third on revenue and has one of the two weakest review scores in the top 10 (3.83).
 
 ## Architecture
 
@@ -71,7 +71,7 @@ flowchart LR
 
 ## Stack
 
-dbt-core 1.12, dbt-duckdb 1.11, DuckDB 1.5, Python 3.11 (pinned in [requirements.txt](requirements.txt)).
+dbt-core 1.12, dbt-duckdb 1.11, DuckDB 1.5, Python 3.11 (used in CI; dbt-core 1.12 requires Python 3.10 or newer). Package versions are pinned in [requirements.txt](requirements.txt).
 
 ## Quickstart
 
@@ -87,13 +87,18 @@ source .venv/bin/activate        # macOS / Linux
 pip install -r requirements.txt
 ```
 
-Download the dataset from [Kaggle](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) and extract it into `data/raw/` (gitignored):
+On macOS and Linux the interpreter may be `python3` instead of `python`.
+
+Download the [dataset from Kaggle](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) and extract it into `data/raw/` (gitignored):
 
 ```bash
+kaggle datasets download -d olistbr/brazilian-ecommerce    # produces brazilian-ecommerce.zip
 mkdir -p data/raw
 unzip brazilian-ecommerce.zip -d data/raw          # Linux
 tar -xf brazilian-ecommerce.zip -C data/raw        # Windows 10+ / macOS
 ```
+
+A browser download works too, as long as the 9 CSVs end up directly in `data/raw/`: `olist_customers_dataset.csv`, `olist_geolocation_dataset.csv`, `olist_order_items_dataset.csv`, `olist_order_payments_dataset.csv`, `olist_order_reviews_dataset.csv`, `olist_orders_dataset.csv`, `olist_products_dataset.csv`, `olist_sellers_dataset.csv`, `product_category_name_translation.csv`.
 
 Build everything and browse the docs. `profiles.yml` ships in the repo, so no `~/.dbt` setup is needed.
 
@@ -126,7 +131,7 @@ dbt docs generate && dbt docs serve
 
 `dbt build` runs 19 models and 45 data tests (64 PASS on the latest run):
 
-- `unique` and `not_null` on every primary key
+- `unique` and `not_null` on every silver and gold primary key
 - `accepted_values` on order status and review score
 - 6 `relationships` tests covering the silver foreign keys
 - 2 composite-key tests: `(order_id, order_item_id)` and `(order_id, payment_sequential)`
