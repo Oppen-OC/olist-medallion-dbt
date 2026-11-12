@@ -1,0 +1,67 @@
+version: 2
+
+models:
+  - name: gold_monthly_sales
+    description: "Gold: revenue and order volume aggregated by calendar month, canceled orders excluded"
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: order_month
+        data_type: timestamp
+        data_tests:
+          - unique
+          - not_null
+      - name: total_orders
+        data_type: bigint
+      - name: total_revenue
+        data_type: double
+        description: "Merchandise revenue: sum of item price over non-canceled orders, freight excluded."
+      - name: avg_order_value
+        data_type: double
+        description: "Average merchandise revenue per order in the month: mean of per-order sum(price), freight excluded, non-canceled orders only."
+
+  - name: gold_category_performance
+    description: "Gold: revenue and item volume aggregated by product category (English name)"
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: product_category
+        data_type: varchar
+        data_tests:
+          - unique
+          - not_null
+      - name: total_orders
+        data_type: bigint
+      - name: total_items_sold
+        data_type: bigint
+      - name: total_revenue
+        data_type: double
+        description: "Merchandise revenue: sum of item price over non-canceled orders, freight excluded."
+      - name: avg_item_price
+        data_type: double
+
+  - name: gold_seller_performance
+    description: "Gold: revenue, order volume and average review score aggregated by seller"
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: seller_id
+        data_type: varchar
+        data_tests:
+          - unique
+          - not_null
+      - name: seller_city
+        data_type: varchar
+      - name: seller_state
+        data_type: varchar
+      - name: total_orders
+        data_type: bigint
+      - name: total_revenue
+        data_type: double
+        description: "Merchandise revenue: sum of item price over non-canceled orders, freight excluded."
+      - name: avg_review_score
+        data_type: double
+        description: "Average customer review score (1-5) over non-canceled orders. Review scores are first averaged per (seller, order), so each order counts once regardless of how many items the seller shipped in it, then averaged per seller. NULL when the seller has no reviewed non-canceled orders."

@@ -1,0 +1,14 @@
+name: 'olist_medallion'
+version: '1.0.0'
+profile: 'olist_medallion'
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+vars:
+  raw_path: 'data/raw'
+
+models:
+  olist_medallion:
+    +materialized: table
