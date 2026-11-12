@@ -44,6 +44,12 @@ Business aggregates, joined from silver. Full descriptions and tests in [`models
 
 All gold tables exclude orders with `order_status = 'canceled'`.
 
+Metric definitions:
+
+- `total_revenue` (all three tables) is merchandise revenue: `sum(price)` over non-canceled order items, freight excluded.
+- `avg_order_value` is the mean of per-order `sum(price)` in the month, so freight is also excluded.
+- `avg_review_score` averages review scores over non-canceled orders only. Scores are first averaged per `(seller_id, order_id)` and then per seller, so each order counts once however many items it holds.
+
 ## Lineage
 
 ```
