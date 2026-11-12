@@ -11,7 +11,7 @@ All commands run from the repo root.
 
 ```bash
 py -3.11 -m venv .venv
-.venv\Scriptsctivate          # Windows
+.venv\Scripts\activate          # Windows
 source .venv/bin/activate        # macOS/Linux
 pip install -r requirements.txt
 ```
