@@ -1,6 +1,3 @@
--- models/gold/gold_monthly_sales.sql
-{{ config(materialized='table') }}
-
 with valid_orders as (
     select *
     from {{ ref('silver_orders') }}
@@ -25,4 +22,3 @@ select
     round(avg(order_revenue), 2) as avg_order_value
 from order_revenue
 group by order_month
-order by order_month

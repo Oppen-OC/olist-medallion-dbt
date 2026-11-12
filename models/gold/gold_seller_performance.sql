@@ -1,6 +1,3 @@
--- models/gold/gold_seller_performance.sql
-{{ config(materialized='table') }}
-
 with valid_orders as (
     select order_id
     from {{ ref('silver_orders') }}
@@ -32,4 +29,3 @@ join {{ ref('silver_sellers') }} s
 left join seller_reviews sr
     on i.seller_id = sr.seller_id
 group by s.seller_id, s.seller_city, s.seller_state, sr.avg_review_score
-order by total_revenue desc

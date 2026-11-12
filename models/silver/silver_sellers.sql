@@ -1,6 +1,3 @@
--- models/silver/silver_sellers.sql
-{{ config(materialized='table') }}
-
 with deduped as (
     select
         seller_id,
@@ -8,7 +5,7 @@ with deduped as (
         trim(seller_city) as seller_city,
         upper(trim(seller_state)) as seller_state,
         row_number() over (partition by seller_id order by seller_id) as rn
-    from {{ ref('stg_sellers') }}
+    from {{ ref('bronze_sellers') }}
     where seller_id is not null
 )
 

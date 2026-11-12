@@ -1,6 +1,3 @@
--- models/gold/gold_category_performance.sql
-{{ config(materialized='table') }}
-
 with valid_orders as (
     select order_id
     from {{ ref('silver_orders') }}
@@ -19,4 +16,3 @@ join valid_orders o
 join {{ ref('silver_products') }} p
     on i.product_id = p.product_id
 group by p.product_category
-order by total_revenue desc

@@ -1,6 +1,3 @@
--- models/silver/silver_orders.sql
-{{ config(materialized='table') }}
-
 with deduped as (
     select
         order_id,
@@ -15,7 +12,7 @@ with deduped as (
             partition by order_id
             order by order_purchase_timestamp desc
         ) as rn
-    from {{ ref('stg_orders') }}
+    from {{ ref('bronze_orders') }}
     where order_id is not null
       and customer_id is not null
       and order_purchase_timestamp is not null

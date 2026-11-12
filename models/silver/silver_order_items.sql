@@ -1,6 +1,3 @@
--- models/silver/silver_order_items.sql
-{{ config(materialized='table') }}
-
 with deduped as (
     select
         order_id,
@@ -14,7 +11,7 @@ with deduped as (
             partition by order_id, order_item_id
             order by shipping_limit_date desc
         ) as rn
-    from {{ ref('stg_order_items') }}
+    from {{ ref('bronze_order_items') }}
     where order_id is not null
       and product_id is not null
       and price >= 0
